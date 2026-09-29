@@ -8,6 +8,12 @@ import com.extendedclip.deluxemenus.menu.options.MenuOptions;
 import com.extendedclip.deluxemenus.requirement.RequirementList;
 import com.extendedclip.deluxemenus.utils.DebugLevel;
 import com.extendedclip.deluxemenus.utils.StringUtils;
+
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.logging.Level;
+
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
@@ -17,9 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
-import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.logging.Level;
 
 public class Menu {
 
@@ -272,11 +276,11 @@ public class Menu {
         }
 
         DeluxeMenusPreOpenMenuEvent preOpenEvent = new DeluxeMenusPreOpenMenuEvent(viewer);
-        Bukkit.getPluginManager().callEvent(preOpenEvent);
+    Bukkit.getPluginManager().callEvent(preOpenEvent);
 
-        if (preOpenEvent.isCancelled()) return;
+    if (preOpenEvent.isCancelled()) return;
 
-        final MenuHolder holder = new MenuHolder(plugin, viewer);
+    final MenuHolder holder = new MenuHolder(plugin, viewer);
         if (placeholderPlayer != null) {
             holder.setPlaceholderPlayer(placeholderPlayer);
         }
@@ -350,7 +354,7 @@ public class Menu {
 
             this.options.openHandler().ifPresent(h -> h.onClick(holder));
 
-            String title = StringUtils.color(holder.setPlaceholdersAndArguments(this.options.title()));
+            Component title = StringUtils.color(holder.setPlaceholdersAndArguments(this.options.title()));
 
             Inventory inventory;
 
