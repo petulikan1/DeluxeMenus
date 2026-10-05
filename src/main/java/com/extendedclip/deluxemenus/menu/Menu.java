@@ -381,7 +381,8 @@ public class Menu {
 
             final boolean updatePlaceholders = update;
 
-            final Runnable openInventoryRunnable = () -> {
+
+            Bukkit.getScheduler().runTask(plugin,() -> {
                 if (options.refresh()) {
                     holder.startRefreshTask();
                 }
@@ -396,24 +397,15 @@ public class Menu {
                 if (updatePlaceholders) {
                     holder.startUpdatePlaceholdersTask();
                 }
-            };
-            if(parseRequirementsAsync){
-                Bukkit.getScheduler().runTask(plugin,openInventoryRunnable);
-            }else {
-                openInventoryRunnable.run();
-            }
+            });
 
 
-            final Runnable callEventRunnable = () -> {
+            Bukkit.getScheduler().runTask(plugin,()-> {
                 DeluxeMenusOpenMenuEvent openEvent = new DeluxeMenusOpenMenuEvent(viewer, holder);
                 Bukkit.getPluginManager().callEvent(openEvent);
-            };
-            if (parseRequirementsAsync) {
-                Bukkit.getScheduler().runTask(plugin,callEventRunnable);
-            }else {
-                callEventRunnable.run();
-            }
+            });
         };
+
         if(parseRequirementsAsync){
             Bukkit.getScheduler().runTaskAsynchronously(plugin,setItemsRunnable);
         }else {
